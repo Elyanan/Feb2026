@@ -56,7 +56,7 @@ export const organizer: Organizer = {
 };
 
 export const stats: Stat[] = [
-  { value: 4, label: "Weekly sessions" },
+  { value: 4, label: "Program sessions" },
   { value: 6, label: "Areas explored" },
   { value: 2, label: "Industry speakers" }
 ];
@@ -83,13 +83,13 @@ export const pillars: Pillar[] = [
 ];
 
 export const details: Detail[] = [
-  { label: "Program", value: "4 weekly sessions" },
+  { label: "Program", value: "4 sessions / 3 dates confirmed" },
   { label: "Focus", value: "Banking / Finance / Economics / Business" },
   { label: "Format", value: "Presentations / Discussions / Q&A / Guest Sessions" },
   { label: "Audience", value: "High-School Students" },
   { label: "Location", value: "Yeneta Academy, around Kore roundabout" },
-  { label: "Dates", value: "[INSERT DATES]" },
-  { label: "Time", value: "Once a week / [INSERT DAY & TIME]" }
+  { label: "Dates", value: "Oct 15, 22 & 29, 2026" },
+  { label: "Time", value: "Lunch Time" }
 ];
 
 export const topics: Topic[] = [
@@ -137,6 +137,7 @@ export const topics: Topic[] = [
 export const schedule: ScheduleWeek[] = [
   {
     title: "The World of Banking",
+    date: "2026-10-15",
     items: [
       "What banks actually do",
       "Commercial vs corporate banking",
@@ -147,6 +148,7 @@ export const schedule: ScheduleWeek[] = [
   },
   {
     title: "Finance & Financial Markets",
+    date: "2026-10-22",
     items: [
       "Financial markets",
       "Stocks and bonds",
@@ -157,6 +159,7 @@ export const schedule: ScheduleWeek[] = [
   },
   {
     title: "Business & Economics",
+    date: "2026-10-29",
     items: [
       "How businesses create value",
       "Business strategy",

@@ -8,7 +8,7 @@ export function ScheduleSection() {
       <div className="container">
         <Reveal>
           <SectionHeading
-            eyebrow="Four weeks, one progression"
+            eyebrow="Four sessions, one progression"
             title="From how banks work to how careers begin."
           />
         </Reveal>

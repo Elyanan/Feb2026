@@ -29,20 +29,25 @@ api.post(/\/data\/query\/registrations/).reply(queryReply);
 api.post(/\/data\/mutate\/registrations/).reply(async function (request) {
   const body = await request.json();
   const results = [];
+  const working = new Map([...records].map(([id, record]) => [id, { ...record }]));
   for (const mutation of body.mutations) {
     const document = mutation.create || mutation.createIfNotExists;
     if (document) {
-      if (mutation.create && records.has(document._id)) return [409, { error: { description: "Duplicate" } }];
-      if (!records.has(document._id)) records.set(document._id, { ...document, _rev: String(revision++) });
-      results.push({ id: document._id, document: records.get(document._id), operation: "create" });
+      if (mutation.create && working.has(document._id)) return [409, { error: { description: "Duplicate" } }];
+      if (!working.has(document._id)) working.set(document._id, { ...document, _rev: String(revision++) });
+      results.push({ id: document._id, document: working.get(document._id), operation: "create" });
     } else if (mutation.patch) {
-      const patch = mutation.patch; const current = records.get(patch.id);
+      const patch = mutation.patch; const current = working.get(patch.id);
       if (!current) return [404, { error: { description: "Missing" } }];
       if (patch.ifRevisionID && patch.ifRevisionID !== current._rev) return [409, { error: { description: "Conflict" } }];
       Object.assign(current, patch.set || {});
       for (const [key, value] of Object.entries(patch.inc || {})) current[key] = (current[key] || 0) + value;
       current._rev = String(revision++); results.push({ id: patch.id, document: { ...current }, operation: "update" });
+    } else if (mutation.delete) {
+      working.delete(mutation.delete.id);
+      results.push({ id: mutation.delete.id, operation: "delete" });
     }
   }
+  records.clear(); for (const [id, record] of working) records.set(id, record);
   return [200, { transactionId: "fixture-transaction", results }];
 });

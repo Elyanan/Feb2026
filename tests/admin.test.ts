@@ -2,12 +2,12 @@ import { beforeEach, afterEach, describe, it, expect, vi } from "vitest";
 import { hash } from "bcryptjs";
 import { evaluate, parse } from "groq-js";
 import type { Session } from "next-auth";
-const mocks = vi.hoisted(() => ({ session: null as Session | null, fetch: vi.fn(), patch: vi.fn(), datasets: { list: vi.fn() }, config: vi.fn() }));
+const mocks = vi.hoisted(() => ({ session: null as Session | null, fetch: vi.fn(), patch: vi.fn(), transaction: vi.fn(), datasets: { list: vi.fn() }, config: vi.fn() }));
 vi.mock("@/lib/auth/session", () => ({ adminSession: async () => mocks.session }));
 vi.mock("@sanity/client", () => ({ createClient: () => mocks }));
 import { verifyAdminCredentials, getAuthOptions } from "@/lib/auth/config";
 import { GET as list } from "@/app/api/admin/registrations/route";
-import { GET as detail } from "@/app/api/admin/registrations/[id]/route";
+import { GET as detail, DELETE as remove } from "@/app/api/admin/registrations/[id]/route";
 import { GET as stats } from "@/app/api/admin/stats/route";
 import { GET as exportCSV } from "@/app/api/admin/export/route";
 import { PATCH } from "@/app/api/admin/registrations/[id]/status/route";
@@ -26,6 +26,42 @@ afterEach(() => { vi.clearAllMocks(); vi.unstubAllEnvs(); });
 function update(body: object, target = id, origin = "http://localhost:3000") {
   return PATCH(new Request("http://localhost:3000/api/admin/registrations/status", { method: "PATCH", headers: { origin, "content-type": "application/json" }, body: JSON.stringify(body) }), { params: Promise.resolve({ id: target }) });
 }
+function deletion(target = id, origin = "http://localhost:3000") {
+  return remove(new Request(`http://localhost:3000/api/admin/registrations/${target}`, { method: "DELETE", headers: { origin } }), { params: Promise.resolve({ id: target }) });
+}
+describe("permanent delete security", () => {
+  it("rejects unauthenticated deletion without any Sanity operation", async () => {
+    const response = await deletion(); expect(response.status).toBe(401); expect(await response.json()).toEqual({ ok: false, error: "UNAUTHORIZED" });
+    expect(mocks.datasets.list).not.toHaveBeenCalled(); expect(mocks.fetch).not.toHaveBeenCalled(); expect(mocks.transaction).not.toHaveBeenCalled();
+  });
+  it("rejects unauthorized identities", async () => {
+    mocks.session = { ...admin, user: { ...admin.user, id: "other" } };
+    expect((await deletion()).status).toBe(403); expect(mocks.fetch).not.toHaveBeenCalled();
+  });
+  it("rejects cross-origin deletion before touching Sanity", async () => {
+    mocks.session = admin; expect((await deletion(id, "https://evil.test")).status).toBe(403); expect(mocks.fetch).not.toHaveBeenCalled();
+  });
+  it("rejects an invalid ID", async () => {
+    mocks.session = admin; const response = await deletion("site-settings"); expect(response.status).toBe(400);
+    expect(await response.json()).toEqual({ ok: false, error: "INVALID_REGISTRATION" }); expect(mocks.fetch).not.toHaveBeenCalled();
+  });
+  it.each([null, { _type: "settings", _rev: "v1" }])("rejects missing or non-registration documents %j", async record => {
+    mocks.session = admin; mocks.fetch.mockResolvedValue(record); expect((await deletion()).status).toBe(404); expect(mocks.transaction).not.toHaveBeenCalled();
+  });
+  it("deletes only the verified ID in a revision-guarded transaction", async () => {
+    mocks.session = admin; mocks.fetch.mockResolvedValue({ _type: "registration", _rev: "v1" });
+    const set = vi.fn(); const ifRevisionId = vi.fn().mockReturnValue({ set });
+    const commit = vi.fn().mockResolvedValue({ transactionId: "success" });
+    const tx = { patch: vi.fn((_id, build) => { build({ ifRevisionId }); return tx; }), delete: vi.fn(() => tx), commit };
+    mocks.transaction.mockReturnValue(tx);
+    const response = await deletion(); expect(response.status).toBe(200); expect(await response.json()).toEqual({ ok: true });
+    expect(ifRevisionId).toHaveBeenCalledWith("v1"); expect(tx.delete).toHaveBeenCalledWith(id); expect(commit).toHaveBeenCalledWith({ visibility: "sync" }); expect(response.headers.get("cache-control")).toContain("no-store");
+  });
+  it.each([500, 409])("sanitizes a failed deletion with upstream status %i", async statusCode => {
+    mocks.session = admin; mocks.fetch.mockRejectedValue(Object.assign(new Error("secret-token-and-applicant-data"), { statusCode }));
+    const response = await deletion(); expect(response.status).toBe(statusCode); expect(await response.text()).not.toContain("secret-token-and-applicant-data"); expect(mocks.transaction).not.toHaveBeenCalled();
+  });
+});
 describe("admin API security", () => {
   it("denies all read/export/write endpoints before querying Sanity", async () => {
     const responses = await Promise.all([list(new Request("http://localhost:3000/api/admin/registrations")), detail(new Request("http://localhost:3000"), context), stats(), exportCSV(new Request("http://localhost:3000/api/admin/export")), update({ status: "In" })]);

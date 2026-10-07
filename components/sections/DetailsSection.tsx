@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { details } from "@/config/site";
 
 export function DetailsSection() {
-  const featureIcons = [CalendarDays, MapPin, Clock];
+  const featureIcons = { Location: MapPin, Dates: CalendarDays, Time: Clock };
 
   return (
     <AnimatedSection className="section-pad bg-[var(--background)]">
@@ -15,8 +15,8 @@ export function DetailsSection() {
         </Reveal>
 
         <div className="mt-12 grid gap-px overflow-hidden border border-[var(--line)] bg-[var(--line)] sm:grid-cols-2 lg:grid-cols-4">
-          {details.map((detail, index) => {
-            const Icon = featureIcons[index - 4];
+          {details.map((detail) => {
+            const Icon = featureIcons[detail.label as keyof typeof featureIcons];
             return (
               <Reveal key={detail.label}>
                 <article className="min-h-36 bg-[var(--paper)] p-6">

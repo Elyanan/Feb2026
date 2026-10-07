@@ -29,9 +29,12 @@ export function ScheduleAccordion() {
               aria-controls={panelId}
               onClick={() => setOpen(active ? -1 : index)}
             >
-              <span className="eyebrow">Week 0{index + 1}</span>
-              <span className="font-[var(--font-display)] text-[clamp(1.35rem,3vw,2.8rem)] leading-none">
-                {week.title}
+              <span className="eyebrow">Session 0{index + 1}</span>
+              <span className="min-w-0">
+                <span className="block font-[var(--font-display)] text-[clamp(1.35rem,3vw,2.8rem)] leading-none">{week.title}</span>
+                <span className="mt-3 block text-sm leading-5 text-[var(--stone)]">
+                  {week.date ? <time dateTime={week.date}>{new Date(`${week.date}T00:00:00Z`).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", timeZone: "UTC" })}</time> : "Date TBD"}
+                </span>
               </span>
               <span
                 className={cn(

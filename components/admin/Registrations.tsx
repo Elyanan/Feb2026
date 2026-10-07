@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Search, RefreshCw, Download, X, ChevronLeft, ChevronRight, Users, Loader2 } from "lucide-react";
 import { areas, grades, statuses } from "@/lib/validation/registration-options";
@@ -25,18 +25,28 @@ export function Registrations() {
   const [exporting, setExporting] = useState(false);
   const [notice, setNotice] = useState("");
   const [refreshed, setRefreshed] = useState("");
+  const generation = useRef(0);
   useEffect(() => { const timer = setTimeout(() => { setDebounced(search); setPage(1); }, 300); return () => clearTimeout(timer); }, [search]);
   const query = new URLSearchParams({ sort, page: String(page), pageSize: "25" });
   if (status) query.set("status", status); if (grade) query.set("grade", grade); if (area) query.set("area", area); if (debounced.trim()) query.set("search", debounced.trim());
   const queryString = query.toString();
   const load = useCallback(async (signal?: AbortSignal) => {
+    const request = ++generation.current;
     setLoading(true); setError("");
-    try { setData(await adminFetch<RegistrationPage>(`/api/admin/registrations?${queryString}`, { signal })); setRefreshed(new Date().toLocaleTimeString()); }
-    catch (error) { if (!signal?.aborted) setError(error instanceof Error ? error.message : "Please try again."); }
-    finally { if (!signal?.aborted) setLoading(false); }
+    try { const result = await adminFetch<RegistrationPage>(`/api/admin/registrations?${queryString}`, { signal }); if (request === generation.current && !signal?.aborted) { setData(result); setRefreshed(new Date().toLocaleTimeString()); } }
+    catch (error) { if (!signal?.aborted && request === generation.current) setError(error instanceof Error ? error.message : "Please try again."); }
+    finally { if (!signal?.aborted && request === generation.current) setLoading(false); }
   }, [queryString]);
   useEffect(() => { const controller = new AbortController(); const timer = setTimeout(() => void load(controller.signal), 0); return () => { clearTimeout(timer); controller.abort(); }; }, [load]);
   function clear() { setStatus(""); setGrade(""); setArea(""); setSort("newest"); setSearch(""); setDebounced(""); setPage(1); }
+  function deleted(id: string) {
+    ++generation.current;
+    setSelected(null); setNotice("Registration deleted.");
+    setData(current => current && { ...current, items: current.items.filter(record => record._id !== id), total: Math.max(0, current.total - 1) });
+    window.dispatchEvent(new Event("feb:registrations-changed"));
+    if (page > 1 && data?.items.length === 1) setPage(value => value - 1);
+    else void load();
+  }
   async function exportCSV() {
     if (exporting) return;
     setExporting(true); setError(""); setNotice("");
@@ -69,6 +79,6 @@ export function Registrations() {
       </>}
       <footer className="admin-pagination"><span>{data?.total ? `${(page - 1) * 25 + 1}-${Math.min(page * 25, data.total)} of ${data.total}` : "0 registrations"}</span><div><button className="admin-icon" title="Previous page" aria-label="Previous page" disabled={page <= 1 || loading} onClick={() => setPage(value => value - 1)}><ChevronLeft size={18} /></button><span>Page {page} of {pages}</span><button className="admin-icon" title="Next page" aria-label="Next page" disabled={page >= pages || loading} onClick={() => setPage(value => value + 1)}><ChevronRight size={18} /></button></div></footer>
     </section><p className="admin-refreshed">{refreshed ? `Last refreshed ${refreshed}` : ""}</p>
-    {selected && <RegistrationDetail key={selected} id={selected} onClose={() => setSelected(null)} onUpdated={() => void load()} />}
+    {selected && <RegistrationDetail key={selected} id={selected} onClose={() => setSelected(null)} onUpdated={() => void load()} onDeleted={() => deleted(selected)} />}
   </>;
 }

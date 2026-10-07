@@ -52,6 +52,16 @@ export async function* exportRegistrations(input: Partial<RegistrationFilters>) 
   }
 }
 export class RegistrationNotFoundError extends Error {}
+export async function deleteRegistration(id: string) {
+  registrationIdSchema.parse(id);
+  const client = await privateClient();
+  const record = await client.fetch<{ _type: string; _rev: string } | null>(`*[_id == $id][0]{_type, _rev}`, { id }, { perspective: "raw" });
+  if (record?._type !== "registration") throw new RegistrationNotFoundError();
+  // Abort the entire transaction if the record changed after its type was verified.
+  await client.transaction()
+    .patch(id, patch => patch.ifRevisionId(record._rev).set({ updatedAt: new Date().toISOString() }))
+    .delete(id).commit({ visibility: "sync" });
+}
 export async function updateRegistrationStatus(id: string, status: string) {
   registrationIdSchema.parse(id);
   const { status: nextStatus } = statusUpdateSchema.parse({ status });

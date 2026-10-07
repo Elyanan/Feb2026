@@ -79,6 +79,7 @@ nav a{display:block;padding:22px 0;font:500 20px var(--serif);letter-spacing:.06
 .day button:focus-visible{outline:2px solid #0c7a3b}
 .day .d{font:500 14px var(--serif);color:#0c7a3b}
 .day .t{font:500 clamp(17px,2.6vw,28px)/1.2 var(--serif);text-transform:uppercase}
+.day .date{display:block;margin-top:12px;font:400 14px/1.4 var(--sans);text-transform:none;color:var(--gray)}
 .day .pm{width:36px;height:36px;border:1px solid rgba(11,46,26,.3);border-radius:50%;position:relative;transition:transform .35s}
 .day .pm::before,.day .pm::after{content:"";position:absolute;left:10px;right:10px;top:17px;height:1px;background:var(--fg)}
 .day .pm::after{transform:rotate(90deg);transition:opacity .3s}
@@ -209,7 +210,7 @@ button,.btn,a{-webkit-tap-highlight-color:transparent}
 <div class="grid" id="topics"></div></div></section>
 
 <section class="light" id="schedule"><div class="wrap">
-<div class="lbl">Four weeks, one progression</div>
+<div class="lbl">Four sessions, one progression</div>
 <h2>From how banks work to how careers begin.</h2>
 <div class="days" id="days"></div></div></section>
 
@@ -228,7 +229,7 @@ button,.btn,a{-webkit-tap-highlight-color:transparent}
 
 <section class="light"><div class="wrap">
 <div class="lbl">What you will walk away with</div>
-<h2 style="color:var(--fg)">Six things you keep after week four.</h2>
+<h2 style="color:var(--fg)">Six things you keep after the program.</h2>
 <div class="ben" id="ben" style="color:var(--fg)"></div></div></section>
 
 <section class="navy" id="fit"><div class="wrap">
@@ -278,9 +279,9 @@ const CONFIG={
  name:"FEB",full:"Finance, Economics & Banking",tagline:"FEB 2026 · Weekly sessions",year:2026,
  organizers:{lead:"Ebenezer Daniel",clubs:["Yenta Academy","Business Club"],collab:"Career and Development Club"},
  pillars:[{t:"Spark curiosity",d:"Show students how far finance reaches, from the bank on the corner to global markets.",i:"M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M6 18l2-2M16 8l2-2M12 8a4 4 0 100 8 4 4 0 000-8z"},{t:"Preach finance",d:"Make the language of money, markets, and business clear and approachable for everyone.",i:"M4 20V10M10 20V4M16 20v-8M22 20H2"},{t:"Find your passion",d:"Help you discover whether banking, economics, finance, or business is the path for you.",i:"M3 17l6-6 4 4 8-9M15 6h6v6"}],
- details:{program:"4 weekly sessions",focus:"Banking • Finance • Economics • Business",format:"Presentations • Discussions • Q&A • Guest Sessions",audience:"High-School Students",location:"Yeneta Academy, around Kore roundabout",dates:"[INSERT DATES]",time:"Once a week · [INSERT DAY & TIME]"},
+ details:{program:"4 sessions / 3 dates confirmed",focus:"Banking • Finance • Economics • Business",format:"Presentations • Discussions • Q&A • Guest Sessions",audience:"High-School Students",location:"Yeneta Academy, around Kore roundabout",dates:"Oct 15, 22 & 29, 2026",time:"Lunch Time"},
  contact:{email:"ebenezer.danielye@gmail.com",telegram:"@Ebenezer_D_Y"},
- stats:[{n:4,l:"Weekly sessions"},{n:6,l:"Areas explored"},{n:2,l:"Industry speakers"}],
+ stats:[{n:4,l:"Program sessions"},{n:6,l:"Areas explored"},{n:2,l:"Industry speakers"}],
  topics:[
   {t:"Banking",d:"How banks operate, how they make money, and their role in the economy.",i:"M3 10l9-6 9 6M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18"},
   {t:"Corporate Finance",d:"How companies raise capital, manage money, evaluate investments, and make financial decisions.",i:"M4 20V10M10 20V4M16 20v-8M22 20H2"},
@@ -289,9 +290,9 @@ const CONFIG={
   {t:"Business",d:"How companies create value, compete, grow, and make strategic decisions.",i:"M3 8h18v12H3zM9 8V5h6v3M3 13h18"},
   {t:"Careers",d:"Explore careers in banking, investment, economics, consulting, entrepreneurship, and finance.",i:"M12 3l9 5-9 5-9-5 9-5zM7 11v5c3 3 7 3 10 0v-5"}],
  schedule:[
-  {title:"The World of Banking",items:["What banks actually do","Commercial vs corporate banking","How banks make money","The role of banks in the economy","Introduction to financial institutions"]},
-  {title:"Finance & Financial Markets",items:["Financial markets","Stocks and bonds","Risk and return","Investing fundamentals","How financial markets work"]},
-  {title:"Business & Economics",items:["How businesses create value","Business strategy","Economics fundamentals","Supply and demand","Decision-making in business"]},
+  {title:"The World of Banking",date:"2026-10-15",items:["What banks actually do","Commercial vs corporate banking","How banks make money","The role of banks in the economy","Introduction to financial institutions"]},
+  {title:"Finance & Financial Markets",date:"2026-10-22",items:["Financial markets","Stocks and bonds","Risk and return","Investing fundamentals","How financial markets work"]},
+  {title:"Business & Economics",date:"2026-10-29",items:["How businesses create value","Business strategy","Economics fundamentals","Supply and demand","Decision-making in business"]},
   {title:"Careers, Leadership & the Real World",items:["Careers in banking and finance","What financial professionals actually do","Professional skills","Industry Q&A","Guest speaker session","Final discussion"]}],
  speakers:[
   {name:"Surprise guest",surprise:true,role:"Corporate Banker",company:"",photo:"",bio:"A working corporate banker will be in the room, ready to share firsthand insight into banks, corporate clients, career paths, and the realities of the industry. Who it is stays a surprise until the day.",social:""},
@@ -319,7 +320,7 @@ $("#brandName").innerHTML=esc(CONFIG.name)+"<span> "+CONFIG.year+"</span>";
 $("#hMeta").textContent=CONFIG.tagline;
 $("#stats").innerHTML=CONFIG.stats.map(s=>`<div><b data-n="${s.n}">0</b><span>${esc(s.l)}</span></div>`).join("");
 $("#topics").innerHTML=CONFIG.topics.map((t,i)=>`<div class="topic"><span class="n">0${i+1}</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="${t.i}"/></svg><h3>${esc(t.t)}</h3><p>${esc(t.d)}</p></div>`).join("");
-$("#days").innerHTML=CONFIG.schedule.map((d,i)=>`<div class="day${i==0?" open":""}"><button aria-expanded="${i==0}" aria-controls="p${i}"><span class="d">Week 0${i+1}</span><span class="t">${esc(d.title)}</span><span class="pm"></span></button><div class="panel" id="p${i}"><div><ul>${d.items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></div></div>`).join("");
+$("#days").innerHTML=CONFIG.schedule.map((d,i)=>`<div class="day${i==0?" open":""}"><button aria-expanded="${i==0}" aria-controls="p${i}"><span class="d">Session 0${i+1}</span><span class="t">${esc(d.title)}<span class="date">${d.date?`<time datetime="${esc(d.date)}">${esc(new Date(d.date+"T00:00:00Z").toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric",timeZone:"UTC"}))}</time>`:"Date TBD"}</span></span><span class="pm"></span></button><div class="panel" id="p${i}"><div><ul>${d.items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></div></div>`).join("");
 $("#spk").innerHTML=CONFIG.speakers.map(s=>`<article class="spk"><div class="ph">${s.photo?`<img src="${esc(s.photo)}" alt="${esc(s.name)}" loading="lazy">`:s.surprise?`<span aria-hidden="true" style="font:500 84px var(--serif);color:var(--gold)">?</span>`:`<svg viewBox="0 0 100 100"><circle cx="50" cy="36" r="18"/><path d="M14 92c4-26 68-26 72 0"/></svg>`}</div><div class="in"><div class="role">${esc(s.role)}</div><h3>${esc(s.name)}</h3>${s.surprise?'<span class="tbd">Identity revealed on the day</span>':""}<p>${esc(s.bio)}</p>${s.company?`<p style="color:var(--gray);font-size:13px">${esc(s.company)}</p>`:""}${s.social?`<a class="so" href="${esc(s.social)}" rel="noopener">Profile</a>`:""}</div></article>`).join("");
 $("#pair").innerHTML=`<div>${esc(CONFIG.speakers[0].role)}<small>Surprise guest</small></div><div class="plus">+</div><div>${esc(CONFIG.speakers[1].role)}<small>Surprise guest</small></div>`;
 $("#ben").innerHTML=CONFIG.benefits.map((b,i)=>`<div><span>0${i+1}</span><span style="color:inherit;font:inherit">${esc(b)}</span></div>`).join("");

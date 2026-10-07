@@ -2,10 +2,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { Users, Clock3, UserCheck, UserX, RefreshCw, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { RegistrationStats } from "@/types/registration";
 import { adminFetch } from "./client";
 
 export function Dashboard() {
+  const pathname = usePathname();
   const [stats, setStats] = useState<RegistrationStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -16,7 +18,13 @@ export function Dashboard() {
     catch (error) { if (!signal?.aborted) setError(error instanceof Error ? error.message : "Please try again."); }
     finally { if (!signal?.aborted) setLoading(false); }
   }, []);
-  useEffect(() => { const controller = new AbortController(); const timer = setTimeout(() => void refresh(controller.signal), 0); return () => { clearTimeout(timer); controller.abort(); }; }, [refresh]);
+  useEffect(() => {
+    if (pathname !== "/admin") return;
+    const controller = new AbortController(); const timer = setTimeout(() => void refresh(controller.signal), 0);
+    const changed = () => void refresh(controller.signal);
+    window.addEventListener("feb:registrations-changed", changed);
+    return () => { clearTimeout(timer); controller.abort(); window.removeEventListener("feb:registrations-changed", changed); };
+  }, [refresh, pathname]);
   const metrics = [
     { label: "Total registrations", value: stats?.total, icon: Users, color: "blue", status: "" },
     { label: "Pending", value: stats?.pending, icon: Clock3, color: "amber", status: "Pending" },

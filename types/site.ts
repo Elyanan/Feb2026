@@ -25,6 +25,7 @@ export type Topic = {
 
 export type ScheduleWeek = {
   title: string;
+  date?: string;
   items: string[];
 };
 

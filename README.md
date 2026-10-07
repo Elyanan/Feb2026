@@ -25,7 +25,7 @@ Use Node.js 24 and run `npm install`. Install the browser used by tests once wit
 
 1. Create or select a project at https://manage.sanity.io. Find its Project ID in project settings.
 2. Under Datasets, create a dedicated dataset called `registrations` with **Private** visibility. Do not use a public content dataset. If your account cannot create private datasets, resolve that before accepting applications. The server inspects actual dataset visibility before every save and fails closed if it is public or cannot be checked.
-3. Under API > Tokens, create a server token with Editor permissions, or a custom role that can read/create/update registration documents and `authRateLimit` metadata, and inspect dataset visibility. Keep it in `.env.local` and your hosting provider's secret environment settings. Do not paste it into code, browser settings, or Studio configuration. No separate read token is needed: the server token supplies duplicate checks, authenticated reads, and status updates.
+3. Under API > Tokens, create a server token with Editor permissions, or a custom role that can read/create/update/delete registration documents, read/create/update `authRateLimit` metadata, and inspect dataset visibility. Keep it in `.env.local` and your hosting provider's secret environment settings. Do not paste it into code, browser settings, or Studio configuration. No separate read token is needed: the server token supplies duplicate checks, authenticated reads, status updates, and confirmed permanent deletion.
 4. Under API > CORS origins, add `http://127.0.0.1:3000` (and `http://localhost:3000` if used), allowing credentials for Studio authentication. Add the exact production website origin on deployment. Do not use wildcard origins.
 5. Invite authorized organizers as Sanity project members with the appropriate role. Studio uses their Sanity login independently of custom admin authentication.
 6. Fill `.env.local` and restart `npm run dev`:
@@ -84,7 +84,7 @@ The normalized email determines a hashed document ID. Sanity's atomic `create` r
 
 `lib/sanity/adminRegistrations.ts` provides parameterized search across all seven applicant fields, status/grade/area filtering, validated sort/pagination, record lookup, aggregate statistics, and revision-guarded status updates. All callers authorize on the server. CSV export streams cursor-paginated records, quotes fields, includes a UTF-8 BOM, and defuses spreadsheet formulas. Private responses have no-store headers. No registration data is statically generated or included in unauthenticated page HTML.
 
-Admin endpoints: `GET /api/admin/registrations`, `GET /api/admin/registrations/[id]`, `PATCH /api/admin/registrations/[id]/status`, `GET /api/admin/stats`, and `GET /api/admin/export`. Authentication is at `/api/auth/[...nextauth]`. The legacy `admin.html` was removed. Public registration flow remains browser > Next.js validation/abuse checks > Sanity with status Pending > authenticated admin API.
+Admin endpoints: `GET /api/admin/registrations`, `GET /api/admin/registrations/[id]`, `DELETE /api/admin/registrations/[id]`, `PATCH /api/admin/registrations/[id]/status`, `GET /api/admin/stats`, and `GET /api/admin/export`. Authentication is at `/api/auth/[...nextauth]`. The legacy `admin.html` was removed. Public registration flow remains browser > Next.js validation/abuse checks > Sanity with status Pending > authenticated admin API.
 
 ### Production deployment
 
@@ -97,6 +97,14 @@ The app sends nosniff, referrer and permissions restrictions, frame denial, and 
 Set `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `NEXT_PUBLIC_SANITY_API_VERSION`, `SANITY_API_WRITE_TOKEN`, `REGISTRATION_FORM_SECRET`, `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `AUTH_SECRET`, and `NEXTAUTH_URL`. Use the script's raw bcrypt hash for Vercel. Never prefix credentials/tokens/secrets with `NEXT_PUBLIC_`. A separate Sanity read token would duplicate the current server token and is intentionally omitted.
 
 ## Checks
+
+### Delete registrations
+
+The applicant drawer offers a secondary `Delete registration` action. Its accessible native confirmation dialog names the applicant, focuses Cancel first, supports Escape cancellation, and requires a second explicit `Delete permanently` action. Pending requests disable controls; failures preserve the applicant and allow retry. Success refreshes the current filtered list, closes both dialogs, announces deletion, and reloads statistics on dashboard return. The last item on a paginated page moves back one page without clearing filters.
+
+`DELETE /api/admin/registrations/[id]` verifies the administrator session and same-origin request, validates the deterministic registration ID, requires a private dataset, and checks the stored document type. A revision-guarded patch and permanent delete run in one atomic Sanity transaction so a concurrent document change aborts deletion. The token needs delete permission for registration documents as well as read/create/update. Public `/api/registrations` has no DELETE handler. Deleted applications disappear from future exports; their emails can register again because this is permanent deletion, not a tombstone.
+
+Browser deletion tests cover Cancel/Escape/focus return, failure/retry, filters, counts, CSV, and persistence. `tests/delete-live.test.ts` runs only when `FEB_LIVE_SANITY_TEST=1` is explicitly set; it creates and deletes its own unique synthetic registration in the configured private dataset and verifies a logged-out request leaves it untouched. Run it only against a project you are authorized to test, with the local server on port 3000. No existing applicant is targeted.
 
 ### Debugging configuration
 

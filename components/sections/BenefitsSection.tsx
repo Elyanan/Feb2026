@@ -7,7 +7,7 @@ export function BenefitsSection() {
     <AnimatedSection className="section-pad bg-[var(--paper)]">
       <div className="container">
         <Reveal>
-          <SectionHeading eyebrow="What you will walk away with" title="Six things you keep after week four." />
+          <SectionHeading eyebrow="What you will walk away with" title="Six things you keep after the program." />
         </Reveal>
         <div className="mt-12 grid gap-x-12 md:grid-cols-2">
           {benefits.map((benefit, index) => (
