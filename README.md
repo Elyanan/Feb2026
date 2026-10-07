@@ -98,6 +98,12 @@ Set `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `NEXT_PUBLIC_
 
 ## Checks
 
+### Debugging configuration
+
+Server configuration is validated lazily by `lib/env.ts`, separately for Sanity writes, form signing, and admin authentication. Development logs identify invalid variable names, registration stages, dataset privacy failures, and SDK HTTP status codes. They deliberately omit raw SDK exceptions because those can contain authorization headers or applicant data. Browser registration diagnostics include only a sanitized code/status; production diagnostics are silent. A public dataset is rejected even if the token has write access.
+
+If the form fails before submission, check `GET /api/registrations`: it must return a signed `formToken`. An empty `REGISTRATION_FORM_SECRET` makes it return 503. If authentication is not configured, inspect server diagnostics for `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, and `AUTH_SECRET`; a plaintext password is not a hash. Run `npm run setup:admin`, then completely restart the development server. A token may read/create/update documents without having permission to change dataset privacy; change privacy separately through Sanity Manage.
+
 `npm test`, `npm run test:ui`, `npm run test:admin`, `npm run lint`, `npm run typecheck`, and `npm run build` validate the implementation. Unit tests mock Sanity and evaluate the actual GROQ queries. Admin browser tests start an isolated Next.js server on port 3100 with synthetic credentials and intercepted Sanity HTTP calls, exercising the real form/API/auth/dashboard/export code. The fixture preload is used only by the test launcher and is never imported by the application. These tests do not prove a live Sanity save. A live record check requires your configured project and credentials: submit, confirm in Studio/admin, search/open details, change Pending to In, refresh, export, logout, and verify unauthenticated API calls return 401.
 
 New admin files: `lib/auth/{config,session,throttle}.ts`, `lib/admin/{http,validation,csv}.ts`, `types/{auth.d.ts,registration.ts}`, `app/api/auth/[...nextauth]/route.ts`, `app/api/admin/**/route.ts`, `app/admin/layout.tsx`, `app/admin/admin.css`, `app/admin/login/page.tsx`, protected admin layouts/pages/loading, `components/admin/*`, `scripts/hash-password.mjs`, and the admin test suite/fixtures/config/launcher. Modified files include the root/public layouts, Sanity query helpers, environment templates, package files, security headers, `.gitignore`, and this README.

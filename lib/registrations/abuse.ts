@@ -1,10 +1,9 @@
 import "server-only";
 import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
+import { getRegistrationSecret } from "@/lib/env";
 
 function secret() {
-  const value = process.env.REGISTRATION_FORM_SECRET;
-  if (!value || value.length < 32) throw new Error("Form signing secret missing");
-  return value;
+  return getRegistrationSecret();
 }
 function signature(value: string) { return createHmac("sha256", secret()).update(value).digest("hex"); }
 export function issueFormToken(now = Date.now()) {

@@ -3,13 +3,13 @@ import { readFile, writeFile } from "node:fs/promises";
 import { Writable } from "node:stream";
 import { createInterface } from "node:readline/promises";
 import { hash } from "bcryptjs";
-import { loadEnvConfig } from "@next/env";
+import nextEnv from "@next/env";
 
 if (!process.stdin.isTTY) {
   console.error("Run npm run setup:admin in an interactive terminal.");
   process.exit(1);
 }
-loadEnvConfig(process.cwd());
+nextEnv.loadEnvConfig(process.cwd());
 let muted = false;
 const output = new Writable({ write(chunk, encoding, callback) {
   if (!muted) process.stdout.write(chunk, encoding);

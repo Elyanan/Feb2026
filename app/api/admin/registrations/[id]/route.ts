@@ -7,5 +7,5 @@ export async function GET(_request: Request, context: { params: Promise<{ id: st
   try {
     const record = await getRegistrationById((await context.params).id);
     return record ? privateJson(record) : privateJson({ message: "Registration not found." }, 404);
-  } catch (error) { return error instanceof ZodError ? privateJson({ message: "Invalid registration." }, 400) : adminFailure(); }
+  } catch (error) { return error instanceof ZodError ? privateJson({ message: "Invalid registration." }, 400) : adminFailure(error); }
 }

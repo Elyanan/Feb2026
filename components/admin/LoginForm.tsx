@@ -11,7 +11,7 @@ export function LoginForm({ configured }: { configured: boolean }) {
   const pending = useRef(false);
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!configured) { setError("Sign-in is temporarily unavailable."); return; }
+    if (!configured) { setError("Admin authentication is not configured."); return; }
     if (pending.current) return;
     const form = event.currentTarget;
     const values = new FormData(form);
@@ -28,9 +28,9 @@ export function LoginForm({ configured }: { configured: boolean }) {
     <div className="admin-login-content">
       <ShieldCheck className="admin-login-icon" size={30} aria-hidden="true" />
       <p className="admin-kicker">FEB Admin</p><h1>Welcome back</h1><p className="admin-muted">Sign in to manage applications.</p>
-      {!configured && <p role="alert" className="admin-error">Sign-in is temporarily unavailable.</p>}
+      {!configured && <p role="alert" className="admin-error">Admin authentication is not configured.</p>}
       <form onSubmit={submit} className="admin-login-form" aria-busy={busy}>
-        <fieldset disabled={busy || !configured}>
+        <fieldset disabled={busy}>
           <label htmlFor="admin-username">Username</label><input id="admin-username" name="username" autoComplete="username" required maxLength={120} />
           <label htmlFor="admin-password">Password</label><div className="admin-password"><input id="admin-password" name="password" autoComplete="current-password" type={visible ? "text" : "password"} required maxLength={72} /><button type="button" className="admin-icon" aria-label={visible ? "Hide password" : "Show password"} title={visible ? "Hide password" : "Show password"} onClick={() => setVisible(value => !value)}>{visible ? <EyeOff size={18} /> : <Eye size={18} />}</button></div>
           {error && <p role="alert" className="admin-error">{error}</p>}

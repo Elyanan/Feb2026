@@ -4,9 +4,12 @@ import { compare } from "bcryptjs";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { loginAttemptAllowed } from "./throttle";
+import { getAuthEnvironment } from "@/lib/env";
+import { developmentError, developmentInfo } from "@/lib/diagnostics";
 
 export function authConfigured() {
-  return Boolean(process.env.ADMIN_USERNAME && /^\$2[aby]\$(1[2-6])\$[./A-Za-z0-9]{53}$/.test(process.env.ADMIN_PASSWORD_HASH || "") && (process.env.AUTH_SECRET?.length ?? 0) >= 32);
+  try { getAuthEnvironment(); return true; }
+  catch (error) { developmentError("auth", "CONFIGURATION_INCOMPLETE", error); return false; }
 }
 function credentialsVersion() {
   return createHmac("sha256", process.env.AUTH_SECRET!).update(`${process.env.ADMIN_USERNAME}:${process.env.ADMIN_PASSWORD_HASH}`).digest("hex");
@@ -33,10 +36,10 @@ export function getAuthOptions(): NextAuthOptions {
       name: "FEB administrator", credentials: { username: { label: "Username", type: "text" }, password: { label: "Password", type: "password" } },
       async authorize(credentials) {
         try {
-          if (!await loginAttemptAllowed()) return null;
-          if (!credentials || !await verifyAdminCredentials(credentials.username, credentials.password)) return null;
+          if (!await loginAttemptAllowed()) { developmentInfo("auth", "login throttled"); return null; }
+          if (!credentials || !await verifyAdminCredentials(credentials.username, credentials.password)) { developmentInfo("auth", "credential verification failed"); return null; }
           return { id: "feb-admin", name: "Administrator", role: "admin" };
-        } catch { return null; }
+        } catch (error) { developmentError("auth", "LOGIN_FAILED", error); return null; }
       }
     })],
     callbacks: {

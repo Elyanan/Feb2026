@@ -20,5 +20,5 @@ export async function GET(request: Request) {
       async cancel() { await records.return(undefined); }
     });
     return new Response(stream, { headers: { "Content-Type": "text/csv; charset=utf-8", "Content-Disposition": `attachment; filename="feb-registrations-${new Date().toISOString().slice(0, 10)}.csv"`, "Cache-Control": "private, no-store", "Vary": "Cookie" } });
-  } catch (error) { return error instanceof ZodError ? privateJson({ message: "Invalid filters." }, 400) : adminFailure(); }
+  } catch (error) { return error instanceof ZodError ? privateJson({ message: "Invalid filters." }, 400) : adminFailure(error); }
 }

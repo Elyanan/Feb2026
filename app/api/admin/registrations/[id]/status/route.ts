@@ -16,6 +16,6 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
     if (error instanceof ZodError || error instanceof SyntaxError || error instanceof RangeError) return privateJson({ message: "Invalid registration or status." }, 400);
     if (error instanceof RegistrationNotFoundError) return privateJson({ message: "Registration not found." }, 404);
     if (typeof error === "object" && error !== null && "statusCode" in error && error.statusCode === 409) return privateJson({ message: "This record changed. Refresh and try again." }, 409);
-    return adminFailure();
+    return adminFailure(error);
   }
 }

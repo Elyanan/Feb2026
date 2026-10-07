@@ -2,13 +2,15 @@ import { registrationRequestSchema } from "@/lib/validation/application";
 import { allowAttempt, issueFormToken, readLimitedJson, validFormToken } from "@/lib/registrations/abuse";
 import { DuplicateRegistrationError, saveRegistration } from "@/lib/sanity/registrations";
 import { sameOrigin } from "@/lib/security/origin";
+import { developmentError, developmentInfo } from "@/lib/diagnostics";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 function reply(body: object, status = 200) { return Response.json(body, { status, headers: { "Cache-Control": "no-store" } }); }
 const unavailable = () => reply({ code: "unavailable", message: "We couldn't submit your application. Your information is still here. Please try again." }, 503);
 export async function GET() {
-  try { return reply({ formToken: issueFormToken() }); } catch { return unavailable(); }
+  try { return reply({ formToken: issueFormToken() }); }
+  catch (error) { developmentError("registration", "FORM_TOKEN_FAILED", error); return unavailable(); }
 }
 export async function POST(request: Request) {
   if (!sameOrigin(request)) {
@@ -21,6 +23,7 @@ export async function POST(request: Request) {
   const result = registrationRequestSchema.safeParse(body);
   if (!result.success) return reply({ code: "validation", message: "Please check the highlighted fields.", errors: result.error.flatten().fieldErrors }, 422);
   const { website, formToken, ...values } = result.data;
+  developmentInfo("registration", "validation passed");
   if (website) return reply({ code: "bot", message: "Please reload the form and try again." }, 400);
   try {
     if (!validFormToken(formToken)) return reply({ code: "timing", message: "Please wait a moment and try again. If the form has expired, reload it." }, 400);
@@ -29,7 +32,7 @@ export async function POST(request: Request) {
     return reply({ saved: true }, 201);
   } catch (error) {
     if (error instanceof DuplicateRegistrationError) return reply({ code: "duplicate", message: "It looks like an application has already been submitted with this email." }, 409);
-    console.error("Registration storage unavailable");
+    developmentError("registration", "SUBMISSION_FAILED", error);
     return unavailable();
   }
 }
