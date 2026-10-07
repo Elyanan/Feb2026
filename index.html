@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff"><meta name="color-scheme" content="light">
+<title>FEB 2026 — Finance, Economics &amp; Banking</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#e4f4ea;--ink:#ffffff;--paper:#f3f9f5;--fg:#0b2e1a;--gray:#4d675a;--line:rgba(11,46,26,.18);--gold:#0b7d3a;--serif:'Orbitron','Segoe UI',sans-serif;--sans:'Rajdhani','Segoe UI',sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:72px;height:auto}
+body{margin:0;background:var(--ink);color:var(--fg);font:500 18px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+section{padding:96px 0;position:relative}
+.light{background:var(--paper);color:var(--fg)}
+.navy{background:var(--navy)}
+.lbl{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.light .lbl{color:#0c7a3b}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.15;margin:0;text-transform:uppercase;letter-spacing:.02em}
+h2{font-size:clamp(24px,4.2vw,44px);margin:14px 0 24px;max-width:15em}
+h3{font-size:19px;line-height:1.25}
+p{margin:0 0 1em}
+.lead{font-size:18px;color:#3d5a49;max-width:36em}
+.light .lead{color:#3d5a49}
+.rule{height:1px;background:var(--line);border:0;margin:0}
+.light .rule{background:rgba(11,46,26,.15)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 30px;font:600 13px var(--sans);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border:1px solid var(--gold);background:var(--gold);color:#fff;cursor:pointer;transition:background .25s,color .25s}
+.btn:hover{background:transparent;color:var(--gold)}
+.btn.ghost{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+document.querySelectorAll(".f").forEach((f,i)=>{const e=f.querySelector(".err"),c=f.querySelector("input,select,textarea");if(e&&c){e.id="e"+i;e.setAttribute("aria-live","polite");c.setAttribute("aria-describedby",e.id)}});
+/* nav */
+header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font:600 17px var(--serif);text-decoration:none;letter-spacing:.06em;text-transform:uppercase}
+.brand span{color:var(--gold)}
+nav ul{display:flex;gap:34px;list-style:none;margin:0;padding:0}
+nav a{font-size:12px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;color:#3d5a49}
+nav a:hover{color:var(--gold)}
+.nav .btn{min-height:40px;padding:0 20px}
+.burger{display:none;background:none;border:0;color:var(--fg);width:48px;height:48px;cursor:pointer}
+.burger i{display:block;width:22px;height:1px;background:var(--fg);margin:6px auto;transition:transform .3s,opacity .3s}
+.burger[aria-expanded=true] i:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger[aria-expanded=true] i:nth-child(2){opacity:0}
+.burger[aria-expanded=true] i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:860px){.nav>.btn{display:inline-flex}
+nav{position:fixed;inset:64px 0 0 0;background:var(--ink);padding:40px 22px;display:none}
+nav.open{display:block}nav ul{flex-direction:column;gap:0}nav li{border-bottom:1px solid var(--line)}
+nav a{display:block;padding:22px 0;font:500 20px var(--serif);letter-spacing:.06em;text-transform:uppercase;color:var(--fg)}}
+/* hero */
+.hero{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:110px 0 90px;background:radial-gradient(900px 500px at 80% 20%,#d3efdc 0,transparent 70%),var(--ink);overflow:hidden}
+#chart{position:absolute;inset:0;width:100%;height:100%;opacity:.5;pointer-events:none}
+.hero h1{font-size:clamp(32px,7.4vw,92px);margin:20px 0 28px;max-width:10em}
+.hero .row{display:flex;gap:14px;flex-wrap:wrap;margin-top:36px}
+.hero .tick{position:absolute;bottom:26px;left:0;right:0;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gray)}
+.tick .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+/* why */
+.big{font:500 clamp(19px,3vw,34px)/1.35 var(--serif);letter-spacing:.01em;max-width:20em}
+.big em{font-style:normal;color:#0c7a3b}
+.split{display:grid;grid-template-columns:5fr 7fr;gap:60px;margin-top:20px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:56px;border-top:1px solid rgba(11,46,26,.15)}
+.stats div{padding:26px 16px 0 0}
+.stats b{display:block;font:500 clamp(34px,5vw,60px)/1 var(--serif)}
+.stats span{font-size:13px;color:#3d5a49}
+/* topics */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line);margin-top:48px}
+.topic{padding:34px 28px 38px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .3s;min-height:260px}
+.topic:hover{background:rgba(196,165,116,.07)}
+.topic svg{width:28px;height:28px;stroke:var(--gold);fill:none;stroke-width:1.2;margin-bottom:46px;transition:transform .4s}
+.topic:hover svg{transform:translateY(-4px)}
+.topic .n{float:right;font:500 14px var(--serif);color:var(--gray)}
+.topic p{color:#3d5a49;font-size:15px;margin-top:12px}
+/* schedule */
+.days{margin-top:44px;border-top:1px solid rgba(11,46,26,.18)}
+.day{border-bottom:1px solid rgba(11,46,26,.18)}
+.day button{all:unset;box-sizing:border-box;width:100%;display:grid;grid-template-columns:90px 1fr 40px;align-items:center;gap:12px;padding:30px 0;cursor:pointer}
+.day button:focus-visible{outline:2px solid #0c7a3b}
+.day .d{font:500 14px var(--serif);color:#0c7a3b}
+.day .t{font:500 clamp(17px,2.6vw,28px)/1.2 var(--serif);text-transform:uppercase}
+.day .pm{width:36px;height:36px;border:1px solid rgba(11,46,26,.3);border-radius:50%;position:relative;transition:transform .35s}
+.day .pm::before,.day .pm::after{content:"";position:absolute;left:10px;right:10px;top:17px;height:1px;background:var(--fg)}
+.day .pm::after{transform:rotate(90deg);transition:opacity .3s}
+.day.open .pm{transform:rotate(180deg)}.day.open .pm::after{opacity:0}
+.panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s}
+.day.open .panel{grid-template-rows:1fr}
+.panel>div{overflow:hidden}
+.panel ul{margin:0;padding:0 0 32px 102px;list-style:none;columns:2;column-gap:40px}
+.panel li{padding:8px 0;border-top:1px solid rgba(11,46,26,.1);break-inside:avoid;color:#3d5a49}
+/* speakers */
+.sp{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:48px}
+.spk{border:1px solid var(--line)}
+.ph{aspect-ratio:4/3;background:linear-gradient(135deg,#e3f3e8,#c9e6d3);display:grid;place-items:center;position:relative;overflow:hidden}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph svg{width:90px;stroke:var(--line);fill:none;stroke-width:1}
+.spk .in{padding:28px}
+.spk .role{color:var(--gold);font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
+.spk h3{margin:8px 0 12px}.spk p{color:#3d5a49;font-size:15px}
+.spk a.so{font-size:13px;color:var(--gold)}
+.tbd{font-size:12px;color:var(--gray);border:1px dashed var(--line);padding:2px 8px;display:inline-block;margin-bottom:10px}
+/* q&a */
+.qa{background:linear-gradient(180deg,var(--navy),var(--ink));text-align:left}
+.qa .box{display:grid;grid-template-columns:7fr 5fr;gap:60px;align-items:center}
+.live{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.pair{border:1px solid var(--line);padding:34px}
+.pair div{padding:18px 0;border-bottom:1px solid var(--line);font:500 20px var(--serif);text-transform:uppercase}
+.pair div:last-child{border:0}.pair small{display:block;font:400 13px var(--sans);color:var(--gray)}
+.pair .plus{color:var(--gold);padding:6px 0;font-size:24px}
+/* benefits */
+.ben{display:grid;grid-template-columns:repeat(2,1fr);gap:0 60px;margin-top:40px}
+.ben div{display:grid;grid-template-columns:60px 1fr;padding:26px 0;border-top:1px solid var(--line);font:500 clamp(16px,1.9vw,21px)/1.35 var(--serif)}
+.ben span{font-size:18px;color:var(--gold)}
+/* for you */
+.fit{columns:2;column-gap:60px;margin:36px 0 0;padding:0;list-style:none}
+.fit li{padding:16px 0 16px 34px;border-top:1px solid rgba(11,46,26,.15);position:relative;break-inside:avoid}
+.fit li::before{content:"";position:absolute;left:4px;top:22px;width:12px;height:6px;border-left:1.5px solid #0c7a3b;border-bottom:1.5px solid #0c7a3b;transform:rotate(-45deg)}
+.note{margin-top:36px;padding:24px 28px;border-left:2px solid #0c7a3b;background:#fff;font:500 18px/1.4 var(--serif)}
+/* details */
+.det{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:40px}
+.det div{padding:24px 18px 24px 0;border-bottom:1px solid var(--line)}
+.det small{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.det b{font:500 16px/1.4 var(--serif)}
+/* form */
+.form{max-width:760px;margin:44px auto 0}
+.f{margin-bottom:26px}
+label,legend{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#3d5a49;margin-bottom:8px;font-weight:600;padding:0}
+input,textarea,select{width:100%;min-height:52px;background:transparent;border:0;border-bottom:1px solid rgba(11,46,26,.35);color:var(--fg);font:500 18px var(--sans);padding:10px 0;border-radius:0}
+select option{color:#000}
+textarea{min-height:110px;resize:vertical}
+input:focus,textarea:focus,select:focus{outline:0;border-color:var(--gold)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;border:0;margin:0;padding:0}
+.chips label{margin:0;text-transform:none;letter-spacing:0;font-size:15px;font-weight:500}
+.chips input{position:absolute;opacity:0;width:1px;min-height:0}
+.chips span{display:inline-flex;align-items:center;min-height:48px;padding:0 20px;border:1px solid var(--line);cursor:pointer;transition:.2s}
+.chips input:checked+span{background:var(--gold);color:#fff;border-color:var(--gold)}
+.chips input:focus-visible+span{outline:2px solid var(--fg);outline-offset:2px}
+.err{color:#c0392b;font-size:13px;min-height:18px;margin-top:6px}
+.bad{border-color:#c0392b!important}
+.form .btn{width:100%}
+.done{text-align:center;padding:60px 0;max-width:620px;margin:0 auto;animation:rise .8s both}
+.done svg{width:84px;margin-bottom:26px}
+.done circle,.done path{fill:none;stroke:var(--gold);stroke-width:1.5;stroke-dasharray:260;stroke-dashoffset:260;animation:draw 1.2s .2s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+.dev{margin-top:26px;font-size:13px;color:var(--gray);border:1px dashed var(--line);padding:12px}
+[hidden]{display:none!important}
+footer{border-top:1px solid var(--line);padding:60px 0 40px;font-size:14px;color:var(--gray)}
+footer .top{display:flex;justify-content:space-between;gap:36px;flex-wrap:wrap;margin-bottom:40px}
+footer h4{font:600 20px var(--serif);text-transform:uppercase;color:var(--fg);margin:0 0 6px}
+footer ul{list-style:none;padding:0;margin:0}footer li{padding:5px 0}
+footer a{text-decoration:none}footer a:hover{color:var(--gold)}
+/* reveal: hero only entrance; counters */
+.hero .wrap>*{animation:rise 1s both}.hero .wrap>*:nth-child(2){animation-delay:.12s}.hero .wrap>*:nth-child(3){animation-delay:.24s}.hero .wrap>*:nth-child(4){animation-delay:.36s}
+@media(max-width:860px){section{padding:68px 0}.split,.qa .box,.sp,.ben{grid-template-columns:1fr;gap:28px}.grid{grid-template-columns:1fr 1fr}.det{grid-template-columns:1fr 1fr}.fit,.panel ul{columns:1}.panel ul{padding-left:0}.day button{grid-template-columns:56px 1fr 36px}.two{grid-template-columns:1fr;gap:0}.topic{min-height:0;padding:24px 18px}.topic svg{margin-bottom:26px}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.stats b{font-size:36px}.hero .btn{width:100%}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+#explore .topic p{color:#3d5a49}#explore .grid,#explore .topic{border-color:rgba(11,46,26,.18)}#org b{display:block}html,body{overflow-x:clip;-webkit-text-size-adjust:100%}
+.skip{position:absolute;left:12px;top:-60px;z-index:100;background:var(--gold);color:#fff;padding:12px 18px;text-decoration:none;font-weight:600}.skip:focus{top:calc(env(safe-area-inset-top,0px) + 8px)}
+input:focus,textarea:focus,select:focus{box-shadow:0 1px 0 0 var(--gold)}
+input[aria-invalid=true],textarea[aria-invalid=true],select[aria-invalid=true]{border-color:#c0392b}
+button,.btn,a{-webkit-tap-highlight-color:transparent}
+@media(max-width:1060px){.nav{gap:12px}nav ul{gap:20px}}
+@media(min-width:861px) and (max-width:1100px){#explore .grid,.det{grid-template-columns:1fr 1fr}}
+@media(max-width:860px){#pillars{grid-template-columns:repeat(3,1fr)}.wrap{padding:0 max(22px,env(safe-area-inset-left,0px))}}
+@media(max-width:700px){#pillars{grid-template-columns:1fr}.stats span{display:block;line-height:1.3}}
+@media(max-width:520px){.det{grid-template-columns:1fr}.day button{grid-template-columns:76px 1fr 36px}.stats div{padding-right:8px}.chips span{min-height:48px}}
+@media(max-height:560px){.hero .tick{display:none}.hero{padding-bottom:50px}}
+@media(min-width:1500px){body{font-size:20px}.wrap{max-width:1320px}}
+@media(forced-colors:active){.btn,.chips span{border:1px solid CanvasText}}
+</style></head>
+<body>
+<a class="skip" href="#top">Skip to content</a>
+<header><div class="wrap nav">
+<a class="brand" href="#top" id="brandName"></a>
+<nav id="nav" aria-label="Main"><ul>
+<li><a href="#why">Program</a></li><li><a href="#explore">The Experience</a></li><li><a href="#speakers">Speakers</a></li><li><a href="#schedule">Schedule</a></li><li><a href="#apply">Apply</a></li></ul></nav>
+<a class="btn" href="#apply">Apply now</a>
+</div></header>
+
+<main id="top">
+<section class="hero"><svg id="chart" preserveAspectRatio="none" aria-hidden="true"></svg>
+<div class="wrap">
+<div class="lbl">FEB 2026 · Finance, Economics &amp; Banking</div>
+<h1>Find what makes finance click for you.</h1>
+<p class="lead">FEB is a weekly program that sparks curiosity about banking, economics, finance, and business, and helps you discover the path you are passionate about. Presentations, discussions, and conversations with professionals who work in the industry.</p>
+<div class="row"><a class="btn" href="#apply">Apply for the program</a><a class="btn ghost" href="#about">Explore the program</a></div></div>
+<div class="tick"><div class="wrap"><span id="hMeta"></span><span>Beginners welcome</span></div></div></section>
+
+<section class="light" id="why"><div class="wrap">
+<div class="lbl">Why finance?</div>
+<p class="big" style="margin-top:18px">Every company. Every market. Every investment. Every major business decision is connected to <em>finance</em>.</p>
+<div class="split"><div></div><div><p class="lead">Finance shapes which businesses get built, which careers open up, and how economies grow. Most students first meet it at university or at work. This program lets you understand it before then, from the people who work in it every day.</p></div></div>
+<div class="stats" id="stats"></div></div></section>
+
+<section class="navy" id="about"><div class="wrap">
+<div class="lbl">About FEB</div>
+<h2>Finance, Economics, Banking. One session a week.</h2>
+<p class="lead">FEB exists to spark curiosity, spread an understanding of finance, and help students find their passion in banking, economics, finance, and business.</p>
+<div class="grid" id="pillars"></div>
+<div class="det" id="org" style="margin-top:56px"></div></div></section>
+
+<section id="explore"><div class="wrap">
+<div class="lbl">What you will explore</div>
+<h2>Finance is broader than you think.</h2>
+<div class="grid" id="topics"></div></div></section>
+
+<section class="light" id="schedule"><div class="wrap">
+<div class="lbl">Four weeks, one progression</div>
+<h2>From how banks work to how careers begin.</h2>
+<div class="days" id="days"></div></div></section>
+
+<section id="speakers"><div class="wrap">
+<div class="lbl">Surprise guests</div>
+<h2>Two guests. No names yet.</h2>
+<p class="lead">From the classroom to the boardroom: two professionals will join FEB in person. We are keeping their identities a secret until the day, and all we will say is that you will want to be there.</p>
+<div class="sp" id="spk"></div></div></section>
+
+<section class="qa" id="qa"><div class="wrap box"><div>
+<div class="live"><i></i>Live industry Q&amp;A</div>
+<h2>Ask the people who work in the industry.</h2>
+<p class="lead">Have questions about banking? Careers? Finance? Markets? What it is actually like working in the industry?</p><p class="lead">This is your opportunity to ask.</p>
+<a class="btn" href="#questionField" id="askBtn">Ask your question</a></div>
+<div class="pair" id="pair"></div></div></section>
+
+<section class="light"><div class="wrap">
+<div class="lbl">What you will walk away with</div>
+<h2 style="color:var(--fg)">Six things you keep after week four.</h2>
+<div class="ben" id="ben" style="color:var(--fg)"></div></div></section>
+
+<section class="navy" id="fit"><div class="wrap">
+<div class="lbl">Is this for you?</div>
+<h2>Curious is enough.</h2>
+<ul class="fit" id="fitList" style="border-color:var(--line)"></ul>
+<p class="note" style="background:transparent;color:var(--fg);border-color:var(--gold)">You do not need to know finance already. Beginners are welcome.</p></div></section>
+
+<section class="light"><div class="wrap">
+<div class="lbl">Program details</div>
+<div class="det" id="det" style="color:var(--fg);border-color:rgba(11,46,26,.2)"></div></div></section>
+
+<section id="apply"><div class="wrap">
+<div style="text-align:center"><div class="lbl">Applications open</div>
+<h2 style="margin-left:auto;margin-right:auto">Take the first step.</h2>
+<p class="lead" style="margin:0 auto">Your interest in finance starts here. It takes about two minutes.</p></div>
+<form class="form" id="form" novalidate>
+<div class="f"><label for="name">Full name</label><input id="name" name="fullName" autocomplete="name" required><div class="err"></div></div>
+<div class="f"><label for="grade">Grade / year</label><select id="grade" name="grade" required><option value="">Select</option></select><div class="err"></div></div>
+<div class="two">
+<div class="f"><label for="email">Email address</label><input id="email" name="email" type="email" inputmode="email" autocomplete="email" required><div class="err"></div></div>
+<div class="f"><label for="phone">Phone number</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required><div class="err"></div></div></div>
+<div class="f"><label for="why2">Why are you interested in this program?</label><textarea id="why2" name="motivation" required minlength="20"></textarea><div class="err"></div></div>
+<div class="f"><fieldset class="chips" id="areas"><legend>Which area interests you most?</legend></fieldset><div class="err"></div></div>
+<div class="f"><label for="questionField">If you met the corporate banker, what would you ask?</label><textarea id="questionField" name="speakerQuestion" required placeholder="Type the one question you would ask."></textarea><div class="err"></div></div>
+<button class="btn" type="submit" id="submit">Submit application</button>
+<div class="err" id="formErr" role="alert" style="text-align:center"></div>
+</form>
+<div class="done" id="done" hidden aria-live="polite">
+<svg viewBox="0 0 84 84"><circle cx="42" cy="42" r="40"/><path d="M26 43l11 11 21-24"/></svg>
+<div class="lbl">Application received</div>
+<h2 style="margin:14px auto">You are officially on our list.</h2>
+<p class="lead" style="margin:0 auto">We will share the next steps and program details with you shortly.</p>
+<div class="dev" id="dev" hidden></div></div>
+</div></section>
+</main>
+
+<footer><div class="wrap"><div class="top">
+<div><h4 id="fName"></h4><p>FEB 2026: an introduction to finance, economics, banking &amp; business.</p><p id="orgLine" style="max-width:30em"></p><a class="btn" href="#apply" style="margin-top:10px">Apply now</a></div>
+<ul><li><a href="#why">Program</a></li><li><a href="#explore">The experience</a></li><li><a href="#speakers">Speakers</a></li><li><a href="#schedule">Schedule</a></li></ul>
+<ul id="contact"></ul></div>
+<div id="copy"></div></div></footer>
+
+<script>
+/* ============ CENTRAL CONFIG — edit this block only ============ */
+const CONFIG={
+ name:"FEB",full:"Finance, Economics & Banking",tagline:"FEB 2026 · Weekly sessions",year:2026,
+ organizers:{lead:"Ebenezer Daniel",clubs:["Yenta Academy","Business Club"],collab:"Career and Development Club"},
+ pillars:[{t:"Spark curiosity",d:"Show students how far finance reaches, from the bank on the corner to global markets.",i:"M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M6 18l2-2M16 8l2-2M12 8a4 4 0 100 8 4 4 0 000-8z"},{t:"Preach finance",d:"Make the language of money, markets, and business clear and approachable for everyone.",i:"M4 20V10M10 20V4M16 20v-8M22 20H2"},{t:"Find your passion",d:"Help you discover whether banking, economics, finance, or business is the path for you.",i:"M3 17l6-6 4 4 8-9M15 6h6v6"}],
+ details:{program:"4 weekly sessions",focus:"Banking • Finance • Economics • Business",format:"Presentations • Discussions • Q&A • Guest Sessions",audience:"High-School Students",location:"Yeneta Academy, around Kore roundabout",dates:"[INSERT DATES]",time:"Once a week · [INSERT DAY & TIME]"},
+ contact:{email:"ebenezer.danielye@gmail.com",telegram:"@Ebenezer_D_Y"},
+ stats:[{n:4,l:"Weekly sessions"},{n:6,l:"Areas explored"},{n:2,l:"Industry speakers"}],
+ topics:[
+  {t:"Banking",d:"How banks operate, how they make money, and their role in the economy.",i:"M3 10l9-6 9 6M5 10v8M10 10v8M14 10v8M19 10v8M3 20h18"},
+  {t:"Corporate Finance",d:"How companies raise capital, manage money, evaluate investments, and make financial decisions.",i:"M4 20V10M10 20V4M16 20v-8M22 20H2"},
+  {t:"Economics",d:"How markets, businesses, governments, and consumers interact.",i:"M3 3v18h18M7 15c3-1 4-6 7-6s3 3 7-3"},
+  {t:"Financial Markets",d:"Introduction to markets, investments, stocks, bonds, and the forces that move them.",i:"M3 17l6-6 4 4 8-9M15 6h6v6"},
+  {t:"Business",d:"How companies create value, compete, grow, and make strategic decisions.",i:"M3 8h18v12H3zM9 8V5h6v3M3 13h18"},
+  {t:"Careers",d:"Explore careers in banking, investment, economics, consulting, entrepreneurship, and finance.",i:"M12 3l9 5-9 5-9-5 9-5zM7 11v5c3 3 7 3 10 0v-5"}],
+ schedule:[
+  {title:"The World of Banking",items:["What banks actually do","Commercial vs corporate banking","How banks make money","The role of banks in the economy","Introduction to financial institutions"]},
+  {title:"Finance & Financial Markets",items:["Financial markets","Stocks and bonds","Risk and return","Investing fundamentals","How financial markets work"]},
+  {title:"Business & Economics",items:["How businesses create value","Business strategy","Economics fundamentals","Supply and demand","Decision-making in business"]},
+  {title:"Careers, Leadership & the Real World",items:["Careers in banking and finance","What financial professionals actually do","Professional skills","Industry Q&A","Guest speaker session","Final discussion"]}],
+ speakers:[
+  {name:"Surprise guest",surprise:true,role:"Corporate Banker",company:"",photo:"",bio:"A working corporate banker will be in the room, ready to share firsthand insight into banks, corporate clients, career paths, and the realities of the industry. Who it is stays a surprise until the day.",social:""},
+  {name:"Surprise guest",surprise:true,role:"Guest Speaker",company:"",photo:"",bio:"A second distinguished guest will bring a different professional perspective on how finance and business connect. We are not saying who. You will have to be there.",social:""}],
+ benefits:["A foundation in banking and finance","A clearer understanding of financial markets","Exposure to real professionals","Insight into careers in finance and business","Practical business knowledge","A network of ambitious students"],
+ audience:["Are curious about banking or finance","Want to understand how businesses work","Are interested in economics","Are considering studying business, economics, or finance","Want to explore professional careers","Enjoy solving problems and thinking analytically","Want to learn directly from industry professionals","Simply want to understand how the financial world works"],
+ registration:{
+  open:true,
+  /* Set endpoint to your backend (Supabase Edge Function, Airtable proxy, Apps Script URL...). Empty = nothing is saved. */
+  endpoint:"",
+  grades:["Grade 9","Grade 10","Grade 11","Grade 12"],
+  areas:["Banking","Finance","Economics","Business","Investing","Entrepreneurship","Not sure yet"]}
+};
+/* ============ Application layer (swap for any backend) ============ */
+async function submitApplication(a){
+ // Data model: {fullName,grade,email,phone,motivation,area,speakerQuestion,submittedAt,source}
+ const rec={...a,submittedAt:new Date().toISOString(),source:new URLSearchParams(location.search).get("src")||"qr"};
+ if(!CONFIG.registration.endpoint){console.info("Application (NOT saved, no backend):",rec);return{saved:false}}
+ const r=await fetch(CONFIG.registration.endpoint,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(rec)});
+ if(!r.ok)throw new Error("Server responded "+r.status);return{saved:true}}
+/* ============ Rendering ============ */
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const D=CONFIG.details;
+$("#brandName").innerHTML=esc(CONFIG.name)+"<span> "+CONFIG.year+"</span>";
+$("#hMeta").textContent=CONFIG.tagline;
+$("#stats").innerHTML=CONFIG.stats.map(s=>`<div><b data-n="${s.n}">0</b><span>${esc(s.l)}</span></div>`).join("");
+$("#topics").innerHTML=CONFIG.topics.map((t,i)=>`<div class="topic"><span class="n">0${i+1}</span><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="${t.i}"/></svg><h3>${esc(t.t)}</h3><p>${esc(t.d)}</p></div>`).join("");
+$("#days").innerHTML=CONFIG.schedule.map((d,i)=>`<div class="day${i==0?" open":""}"><button aria-expanded="${i==0}" aria-controls="p${i}"><span class="d">Week 0${i+1}</span><span class="t">${esc(d.title)}</span><span class="pm"></span></button><div class="panel" id="p${i}"><div><ul>${d.items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></div></div>`).join("");
+$("#spk").innerHTML=CONFIG.speakers.map(s=>`<article class="spk"><div class="ph">${s.photo?`<img src="${esc(s.photo)}" alt="${esc(s.name)}" loading="lazy">`:s.surprise?`<span aria-hidden="true" style="font:500 84px var(--serif);color:var(--gold)">?</span>`:`<svg viewBox="0 0 100 100"><circle cx="50" cy="36" r="18"/><path d="M14 92c4-26 68-26 72 0"/></svg>`}</div><div class="in"><div class="role">${esc(s.role)}</div><h3>${esc(s.name)}</h3>${s.surprise?'<span class="tbd">Identity revealed on the day</span>':""}<p>${esc(s.bio)}</p>${s.company?`<p style="color:var(--gray);font-size:13px">${esc(s.company)}</p>`:""}${s.social?`<a class="so" href="${esc(s.social)}" rel="noopener">Profile</a>`:""}</div></article>`).join("");
+$("#pair").innerHTML=`<div>${esc(CONFIG.speakers[0].role)}<small>Surprise guest</small></div><div class="plus">+</div><div>${esc(CONFIG.speakers[1].role)}<small>Surprise guest</small></div>`;
+$("#ben").innerHTML=CONFIG.benefits.map((b,i)=>`<div><span>0${i+1}</span><span style="color:inherit;font:inherit">${esc(b)}</span></div>`).join("");
+$("#fitList").innerHTML="<style>#fitList li{border-color:var(--line)}#fitList li::before{border-color:var(--gold)}</style>"+CONFIG.audience.map(a=>`<li>${esc(a)}</li>`).join("");
+const dl=[["Program",D.program],["Focus",D.focus],["Format",D.format],["Audience",D.audience],["Location",D.location],["Dates",D.dates],["Time",D.time]];
+$("#det").innerHTML=dl.map(([k,v])=>`<div><small>${k}</small><b>${esc(v)}</b></div>`).join("");
+$("#fName").textContent=CONFIG.name+" "+CONFIG.year;
+const O=CONFIG.organizers;
+$("#pillars").innerHTML=CONFIG.pillars.map(t=>`<div class="topic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="${t.i}"/></svg><h3>${esc(t.t)}</h3><p>${esc(t.d)}</p></div>`).join("");
+$("#org").innerHTML=`<div><small>Idea and lead</small><b>${esc(O.lead)}</b></div><div><small>Organized with</small><b>${O.clubs.map(esc).join("<br>")}</b></div><div><small>In collaboration with</small><b>${esc(O.collab)}</b></div>`;
+$("#orgLine").textContent="Led by "+O.lead+" ("+O.clubs.join(", ")+"), in collaboration with "+O.collab+".";
+$("#contact").innerHTML=`<li style="max-width:20em;margin-bottom:8px">If you have any problems or questions, please feel free to contact:</li><li>Telegram: <a href="https://t.me/${esc(CONFIG.contact.telegram.replace("@",""))}" rel="noopener">${esc(CONFIG.contact.telegram)}</a></li><li>Email: <a href="mailto:${esc(CONFIG.contact.email)}">${esc(CONFIG.contact.email)}</a></li>`;
+$("#copy").textContent="© "+CONFIG.year+" "+CONFIG.name+". All rights reserved.";
+CONFIG.registration.grades.forEach(g=>$("#grade").add(new Option(g,g)));
+$("#areas").insertAdjacentHTML("beforeend",CONFIG.registration.areas.map(a=>`<label><input type="radio" name="area" value="${esc(a)}"><span>${esc(a)}</span></label>`).join(""));
+/* nav */
+/* accordion */
+$("#days").onclick=e=>{const b=e.target.closest("button");if(!b)return;const d=b.parentElement,o=!d.classList.contains("open");
+ document.querySelectorAll(".day").forEach(x=>{x.classList.remove("open");x.firstElementChild.setAttribute("aria-expanded",false)});
+ if(o){d.classList.add("open");b.setAttribute("aria-expanded",true)}};
+/* counters (one-time, on view) */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;io.unobserve(e.target);const n=+e.target.dataset.n;let i=0;const t=setInterval(()=>{e.target.textContent=++i;if(i>=n)clearInterval(t)},180)}),{threshold:.6});
+document.querySelectorAll("[data-n]").forEach(el=>matchMedia("(prefers-reduced-motion:reduce)").matches?el.textContent=el.dataset.n:io.observe(el));
+/* hero market lines */
+(function(){const s=$("#chart");let h="";const W=1200,H=700;
+for(let i=1;i<12;i++)h+=`<line x1="${i*100}" y1="0" x2="${i*100}" y2="${H}" stroke="#0b2e1a" stroke-opacity=".07"/>`;
+for(let i=1;i<7;i++)h+=`<line x1="0" y1="${i*100}" x2="${W}" y2="${i*100}" stroke="#0b2e1a" stroke-opacity=".07"/>`;
+let seed=7;const r=()=>(seed=seed*16807%2147483647)/2147483647;let y=520,p="";
+for(let x=0;x<=W;x+=25){y=Math.max(120,Math.min(600,y-9+(r()-.42)*34));p+=(x?"L":"M")+x+" "+y.toFixed(0)}
+h+=`<path d="${p}" fill="none" stroke="#12a150" stroke-width="1.6" stroke-opacity=".7" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"><animate attributeName="stroke-dashoffset" from="1" to="0" dur="3.5s" fill="freeze"/></path>`;
+s.setAttribute("viewBox",`0 0 ${W} ${H}`);s.innerHTML=h})();
+/* form */
+const form=$("#form"),F=n=>form.elements[n];
+function setErr(el,m){const e=el.closest(".f").querySelector(".err");e.textContent=m||"";el.setAttribute("aria-invalid",m?"true":"false");el.classList.toggle("bad",!!m)}
+form.addEventListener("submit",async ev=>{ev.preventDefault();
+ const v={fullName:F("fullName").value.trim(),grade:F("grade").value,email:F("email").value.trim(),phone:F("phone").value.trim(),motivation:F("motivation").value.trim(),area:(form.querySelector("[name=area]:checked")||{}).value||"",speakerQuestion:F("speakerQuestion").value.trim()};
+ let first=null;const chk=(el,ok,m)=>{setErr(el,ok?"":m);if(!ok&&!first)first=el};
+ chk(F("fullName"),v.fullName.length>1,"Enter your full name.");
+ chk(F("grade"),!!v.grade,"Select your grade.");
+ chk(F("email"),/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.email),"Enter a valid email, like name@example.com.");
+ chk(F("phone"),v.phone.replace(/\D/g,"").length>=7,"Enter a phone number with at least 7 digits.");
+ chk(F("motivation"),v.motivation.length>=20,"Write at least a sentence or two (20+ characters).");
+ const ae=$("#areas");ae.closest(".f").querySelector(".err").textContent=v.area?"":"Choose the area that interests you most.";if(!v.area&&!first)first=ae.querySelector("input");
+ chk(F("speakerQuestion"),v.speakerQuestion.length>=10,"Write the question you would ask the corporate banker (10+ characters).");
+ if(first){first.focus();return}
+ if(!CONFIG.registration.open){$("#formErr").textContent="Applications are currently closed.";return}
+ const b=$("#submit");b.disabled=true;b.textContent="Sending…";$("#formErr").textContent="";
+ try{const res=await submitApplication(v);form.hidden=true;$("#done").hidden=false;
+  if(!res.saved){const d=$("#dev");d.hidden=false;d.textContent="Setup note: no backend is connected yet, so this application was not stored. Set CONFIG.registration.endpoint to start collecting applications."}
+  $("#done").scrollIntoView({block:"center"})}
+ catch(e){$("#formErr").textContent="Your application did not send. Check your connection and try again.";b.disabled=false;b.textContent="Submit application"}});
+</script>
+</body></html>
