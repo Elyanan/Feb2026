@@ -24,7 +24,6 @@ export function ApplicationSuccess({ name }: { name: string }) {
         <div className="flex items-center justify-between gap-4"><p className="eyebrow">FEB 2026</p><ArrowUpRight size={18} className="text-[var(--green-700)]" aria-hidden="true" /></div>
         <p className="mt-4 break-words text-xl font-semibold">Thank you, {name.split(/\s+/)[0]}.</p>
         <p className="mt-2 text-sm font-semibold text-[var(--green-700)]">Status: Application received</p>
-        <p className="fine mt-4">We will contact you with next steps and program details. Keep an eye on your email.</p>
       </motion.div>
     </motion.div>
   );

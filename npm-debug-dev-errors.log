@@ -5,3 +5,58 @@
 [browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
 [browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
 [browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <Home>
+      <main id="main">
+        <Hero>
+        <AnimatedSection>
+        <AnimatedSection>
+        <AnimatedSection>
+        ...
+          <section id="schedule" className="section-pa..." style={{}} ref={function useMotionRef.useCallback}>
+            <div className="container">
+              <Reveal>
+              <Reveal>
+                <motion.div variants={{hidden:{...}, ...}} className={undefined}>
+                  <div className={undefined} style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                    <ScheduleAccordion>
+                      <div className="mt-14 bord...">
+                        <div className="border-b b...">
+                          <button id="schedule-b..." type="button" className="grid w-ful..." aria-expanded={true} ...>
+                            <span className="eyebrow">
++                             Week 0
+-                             Session 0
+                              ...
+                            ...
+                          ...
+                        ...
+        ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at span (<anonymous>)
+    at <unknown> (components/sections/ScheduleAccordion.tsx:32:15)
+    at Array.map (<anonymous>)
+    at ScheduleAccordion (components/sections/ScheduleAccordion.tsx:17:17)
+    at ScheduleSection (components\sections\ScheduleSection.tsx:16:11)
+    at Home (app\(public)\page.tsx:20:7)
+  30 |               onClick={() => setOpen(active ? -1 : index)}
+  31 |             >
+> 32 |               <span className="eyebrow">Session 0{index + 1}</span>
+     |               ^
+  33 |               <span className="min-w-0">
+  34 |                 <span className="block font-[var(--font-display)] text-[clamp(1.35rem,3vw,2.8rem)] leading-none">{week.title}</span>
+  35 |                 <span className="mt-3 block text-sm leading-5 text-[var(--stone)]">
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
